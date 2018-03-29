@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jarorwar.tut.mapper.UserMapper">
+	<!--
+		parameterType：定义输入到sql中的映射类型，#{id}表示使用preparedstatement设置占位符号并将输入变量id传到sql。
+		resultType：定义结果映射类型。
+	-->
+	<update id="truncateTable">
+        truncate table users
+    </update>
+	
+	<insert id="saveUser" parameterType="com.jarorwar.tut.entity.User">
+		INSERT INTO users(name,age)  VALUES (#{u.name},#{u.age})
+	</insert>
+	
+	<select id="getAllUsers" resultType="com.jarorwar.tut.entity.User">
+		select * from users
+	</select>
+	
+	<select id="getUserByNameLike" parameterType="string" resultType="com.jarorwar.tut.entity.User">
+		<!-- concat('%',#{name}) -->
+		select * from users where name like "${value}%"
+	</select>
+</mapper>
