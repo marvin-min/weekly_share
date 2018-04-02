@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.jarorwar.tut.entity.Address;
 import com.jarorwar.tut.entity.User;
 
 @RunWith(SpringRunner.class)
@@ -43,10 +44,19 @@ public class UserMapperTest {
 		assertEquals(2, users.size());
 	}
 	
+	
+	@Test
+	public void testGetById() {
+		User user = userMapper.getById(7);
+		for(Address addr:user.getAddresses()) {
+			System.out.println(user.getName() + "==>"+user.getAge()+";" + addr.getTitle()+"=>"+addr.getAddressDetail()+"-->"+ addr.getId());
+		}
+	}
+	
 	private int saveUser() {
-		User user = new User("java",29);
-//		user.setAge(28);
-//		user.setName("Java");
+		User user = new User();
+		user.setAge(28);
+		user.setName("Java");
 		return userMapper.saveUser(user);
 	}
 	
