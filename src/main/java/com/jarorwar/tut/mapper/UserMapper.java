@@ -14,4 +14,5 @@ public interface UserMapper {
 	public int saveUser(@Param("u")User user);
 	public List<User> getAllUsers();
 	public List<User> getUserByNameLike(String name);
+	public User getById(@Param("uid")int id);
 }

@@ -1,6 +1,7 @@
 package com.jarorwar.tut.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class User implements Serializable{
 	private static final long serialVersionUID = 8014969485933046270L;
@@ -9,18 +10,17 @@ public class User implements Serializable{
 	private String name;
 	private int age;
 	
-	public User(String name, int age) {
-		super();
-		this.name = name;
-		this.age = age;
-	}
+	private List<Address> addresses;
 	
-	public User(int id, String name, int age) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.age = age;
+	
+	public List<Address> getAddresses() {
+		return addresses;
 	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+
 
 	public int getId() {
 		return id;
