@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jarorwar.tut.mapper.UserMapper">
+	<resultMap id="userMap" type="com.jarorwar.tut.entity.User">
+	  <!-- 集合中的property须为oftype定义的pojo对象的属性-->
+	   <id column="id" jdbcType="INTEGER" property="id" />
+	   <result column="name" jdbcType="VARCHAR" property="name" />
+	   <result column="age" jdbcType="INTEGER" property="age" />
+	  <collection property="addresses" ofType="com.jarorwar.tut.entity.Address">
+	    <id column="address_id" jdbcType="VARCHAR" property="id" />
+	    <result column="title" jdbcType="VARCHAR" property="title" />  
+	    <result column="address_detail" jdbcType="VARCHAR" property="addressDetail" />  
+	    <result column="is_default" jdbcType="TINYINT" property="isDefault" />  
+	    <result column="title" jdbcType="VARCHAR" property="title" />  
+	    
+	  </collection>
+	</resultMap>
+	<!--
+		parameterType：定义输入到sql中的映射类型，#{id}表示使用preparedstatement设置占位符号并将输入变量id传到sql。
+		resultType：定义结果映射类型。
+	-->
+	<update id="truncateTable">
+        truncate table users
+    </update>
+	
+	<insert id="saveUser" parameterType="com.jarorwar.tut.entity.User">
+		INSERT INTO users(name,age)  VALUES (#{u.name},#{u.age})
+	</insert>
+	
+	<select id="getAllUsers" resultType="com.jarorwar.tut.entity.User">
+		select * from users
+	</select>
+	
+	<select id="getUserByNameLike" parameterType="string" resultType="com.jarorwar.tut.entity.User">
+		<!-- concat('%',#{name}) -->
+		select * from users where name like "${value}%"
+	</select>
+	
+	<select id="getById" parameterType="int" resultMap="userMap">
+		select users.*,addresses.id as address_id, addresses.title, addresses.address_detail,addresses.is_default
+		from users , addresses where users.id =#{uid} and users.id = addresses.user_id
+	</select>
+</mapper>
